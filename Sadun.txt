@@ -1,0 +1,54 @@
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'Delete_XXXX') AND type IN (N'P', N'PC')) 
+DROP PROCEDURE [dbo].[Delete_XXXX]
+GO
+/****** Object:  StoredProcedure [dbo].[Delete_XXXX]    Script Date: 3/25/2019 10:25:24 AM ******/
+CREATE PROC [dbo].[Delete_XXXX]  (@A int, @BatchSize int,@B nvarchar(100))     
+AS  
+	SET ANSI_NULLS ON      
+    SET QUOTED_IDENTIFIER ON      
+    SET NOCOUNT ON  
+	SET xact_abort ON	
+		
+	DECLARE @courseID int
+	DECLARE @deletedCount int
+	DECLARE @DatabaseName nvarchar(100)
+	DECLARE @tableName nvarchar(100)
+	DECLARE @ClientID int
+	
+	
+				
+	CREATE table #dd_currentset (CourseID int,ClientID int)
+	
+	insert into #dd_currentset(CourseID,ClientID)
+	select CourseID,ClientID from
+	Table
+	
+	
+	DECLARE cursor_results CURSOR READ_ONLY FORWARD_ONLY FOR
+	  select CourseID,ClientID from #dd_currentset;
+			
+	OPEN cursor_results
+	FETCH NEXT FROM cursor_results into @CourseID,@ClientID		
+			
+	WHILE @@FETCH_STATUS = 0
+	BEGIN 			
+		
+		
+		
+		
+		FETCH NEXT FROM cursor_results into @CourseID,@ClientID									
+		
+	END
+	
+	/* Clean up work */		
+	CLOSE cursor_results;
+	DEALLOCATE cursor_results;		
+	
+	drop table #dd_currentset
+		
+		
+   
+
+   
